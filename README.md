@@ -73,6 +73,15 @@ O projeto utiliza pytest para realizar os testes. Para rodar os testes, use o co
 task test
 ```
 
+```bash
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=admin1245
+POSTGRES_DB=main
+
+PGADMIN_DEFAULT_EMAIL=admin@gmail.com
+PGADMIN_DEFAULT_PASSWORD=admin1245
+```
+
 ## Estrutura do Projeto
 
 A estrutura do projeto é a seguinte:
@@ -89,3 +98,5 @@ projeto-tickets/
 ├── README.md
 └── test_app.py
 ```
+
+## Variaveis de ambientes
