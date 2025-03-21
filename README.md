@@ -100,3 +100,12 @@ projeto-tickets/
 ```
 
 ## Variaveis de ambientes
+
+```bash
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=admin1245
+POSTGRES_DB=main
+
+PGADMIN_DEFAULT_EMAIL=admin@gmail.com
+PGADMIN_DEFAULT_PASSWORD=admin1245
+```
