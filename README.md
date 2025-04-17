@@ -65,6 +65,28 @@ task run
 
 Isso iniciará o servidor FastAPI, e você poderá acessar a aplicação no http://localhost:5000.
 
+## Docker
+
+Para utilizar o dockerfile e docker-compose você pode fazer o seguinte:
+
+```bash
+docker build -t backend .
+
+docker compose run app
+
+docker compose up postgresql -d
+
+docker compose up pgadmin -d
+```
+
+- O docker build -t backend . cria um container do seu backend.
+
+- O docker compose run app roda aplicação localmente, so que em container
+
+- O docker compose up postgresql -d serve para você instalar a imagem do postgresql no seu docker loclamente
+
+- O docker compose up pgadmin -d serve para você instalar a imagem do pgadmin no seu docker loclamente, sendo assim acessado em http://localhost:5050
+
 ## Testes
 
 O projeto utiliza pytest para realizar os testes. Para rodar os testes, use o comando:

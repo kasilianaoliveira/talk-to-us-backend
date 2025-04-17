@@ -179,3 +179,7 @@ pyrightconfig.json
 
 # Generated using ignr.py - github.com/Antrikshy/ignr.py
 
+.vscode
+postgres_data
+postgres_data_test
+
