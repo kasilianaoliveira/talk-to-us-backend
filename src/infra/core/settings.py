@@ -18,7 +18,8 @@ class Settings(BaseSettings):
 
     @property
     def DATABASE_URL(self) -> str:
-        # db_host = self.POSTGRES_HOST_TEST if self.TEST_MODE else self.POSTGRES_HOST
+        # db_host = self.POSTGRES_HOST_TEST
+        # if self.TEST_MODE else self.POSTGRES_HOST
         return (
             f"postgresql+psycopg2://{self.POSTGRES_USER}:"
             f"{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST_LOCAL}"

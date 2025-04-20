@@ -1,6 +1,7 @@
 import logging
+from typing import Annotated
 
-from dotenv import load_dotenv
+from fastapi import Depends
 from sqlmodel import Session, SQLModel, create_engine
 
 from src.infra.core.settings import Settings
@@ -8,8 +9,6 @@ from src.infra.core.settings import Settings
 logging.basicConfig()
 logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
 
-
-load_dotenv()
 
 setting = Settings()
 engine = create_engine(
@@ -24,3 +23,6 @@ def create_db_and_tables() -> None:
 def get_session():
     with Session(engine) as session:
         yield session
+
+
+SessionDep = Annotated[Session, Depends(get_session)]
