@@ -5,15 +5,14 @@ from sqlmodel import SQLModel
 
 from alembic import context
 from src.infra.core.settings import Settings
-from src.responses.model import *
-from src.tickets.model import *
-from src.users.model import *
+from src.models.product_model import *
+from src.models.user_model import *
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
-config.set_main_option("sqlalchemy.url", Settings().DATABASE_URL)
+config.set_main_option("sqlalchemy.url", Settings().DATABASE_URL_SYNC)
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 if config.config_file_name is not None:
@@ -69,7 +68,9 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(connection=connection, target_metadata=target_metadata)
+        context.configure(
+            connection=connection, target_metadata=target_metadata
+        )
 
         with context.begin_transaction():
             context.run_migrations()
