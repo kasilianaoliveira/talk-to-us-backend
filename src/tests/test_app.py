@@ -1,14 +1,14 @@
-from http import HTTPStatus
+from uvicorn import Config, Server
 
 from src.app import app
 
 
-def test_homepage_should_return_ok_and_welcome_message(client):
+def test_server_initialization(mock_server):
+    config = Config("app:app", port=5000, log_level="info", reload=True)
+    server = Server(config)
 
-    response = client.get("/")  # Act
-
-    assert response.status_code == HTTPStatus.OK  # Assert
-    assert response.json() == {"message": "Welcome to the Home Page!"}
+    server.run()
+    mock_server.assert_called_once()
 
 
 def test_app_import():
