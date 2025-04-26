@@ -51,13 +51,13 @@ class ProductService:
         self,
         user_id: uuid.UUID,
         page: int = 1,
-        limit: int = 10,
+        size: int = 10,
         name: Optional[str] = None,
         status: Optional[str] = None,
     ) -> List[ProductOutput]:
-        offset = (page - 1) * limit
+        offset = (page - 1) * size
         products_result = await self.product_repository.get_all_by_user_paginated(
-            offset, limit, user_id, name, status
+            offset, size, user_id, name, status
         )
 
         return [ProductOutput.model_validate(product) for product in products_result]

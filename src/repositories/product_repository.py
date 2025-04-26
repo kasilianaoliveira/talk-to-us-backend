@@ -26,7 +26,7 @@ class ProductRepository:
     async def get_all_by_user_paginated(
         self,
         offset: int,
-        limit: int,
+        size: int,
         user_id: UUID,
         name: Optional[str] = None,
         status: Optional[str] = None,
@@ -34,16 +34,14 @@ class ProductRepository:
         query = select(Product).where(Product.user_id == user_id)
 
         if name:
-            query = query.where(
-                func.lower(Product.name).like(f"%{name.lower()}%"),
-            )
+            query = query.where(func.lower(Product.name).ilike(f"%{name}%"))
 
         if status:
             query = query.where(Product.status == status)
 
-        result = await self.session.execute(
-            query.offset(offset).limit(limit),
-        )
+        query = query.offset(offset).limit(size)
+
+        result = await self.session.execute(query)
         return list(result.scalars().all())
 
     async def count_all_by_user(

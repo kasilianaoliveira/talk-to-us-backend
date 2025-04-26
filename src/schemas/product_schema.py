@@ -39,10 +39,15 @@ class PaginatedProductResponse(BaseModel):
     items: List[ProductOutput]
     total: int
     page: int
-    limit: int
+    size: int
     pages: int
-    has_next: bool
-    has_prev: bool
+
+
+class ProductFilterParams(BaseModel):
+    page: int = 1
+    size: int = 10
+    name: Optional[str] = None
+    status: Optional[ProductStatus] = ProductStatus.IN_STOCK
 
 
 class ProductUpdate(BaseModel):
@@ -80,9 +85,7 @@ class ProductUpdate(BaseModel):
         stock = values.get("stock")
         if value == ProductStatus.IN_STOCK and stock == 0:
             raise ValueError("Status cannot be IN_STOCK if stock is 0")
-        elif (
-            value == ProductStatus.SOLD_OUT and stock is not None and stock > 0
-        ):
+        elif value == ProductStatus.SOLD_OUT and stock is not None and stock > 0:
             raise ValueError(
                 "Status cannot be OUT_OF_STOCK if stock is greater than 0",
             )
