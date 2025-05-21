@@ -3,8 +3,8 @@ from typing import Annotated
 
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from src.infra.core.settings import Settings
 
+from src.db.settings import Settings
 
 logging.basicConfig()
 logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)

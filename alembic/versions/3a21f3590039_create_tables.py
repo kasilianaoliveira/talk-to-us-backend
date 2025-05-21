@@ -1,8 +1,8 @@
-"""create user and product tables
+"""create tables
 
-Revision ID: 0c5e6decfd07
+Revision ID: 3a21f3590039
 Revises:
-Create Date: 2025-04-20 15:20:31.533299
+Create Date: 2025-05-10 22:28:49.050471
 
 """
 
@@ -10,11 +10,10 @@ from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
-import sqlmodel
 
 
 # revision identifiers, used by Alembic.
-revision: str = "0c5e6decfd07"
+revision: str = "3a21f3590039"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -50,6 +49,7 @@ def upgrade() -> None:
         "products",
         sa.Column("id", sa.Uuid(), nullable=False),
         sa.Column("name", sa.String(), nullable=False),
+        sa.Column("description", sa.String(), nullable=True),
         sa.Column("stock", sa.Integer(), nullable=False),
         sa.Column(
             "unit_price", sa.Numeric(precision=10, scale=2), nullable=False
@@ -80,7 +80,7 @@ def upgrade() -> None:
     )
     op.create_index(op.f("ix_products_id"), "products", ["id"], unique=False)
     op.create_index(
-        op.f("ix_products_name"), "products", ["name"], unique=False
+        op.f("ix_products_name"), "products", ["name"], unique=True
     )
     op.create_index(
         op.f("ix_products_status"), "products", ["status"], unique=False

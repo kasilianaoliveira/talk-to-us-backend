@@ -1,5 +1,6 @@
 FROM python:3.13-slim
 
+
 ENV PYTHONUNBUFFERED=1
 ENV PATH="/root/.local/bin:$PATH"
 ENV PYTHONPATH=/
@@ -7,6 +8,8 @@ ENV PYTHONPATH=/
 COPY ./poetry.lock /
 COPY ./pyproject.toml /
 COPY ./README.md /
+
+WORKDIR /build
 
 
 RUN apt-get update -y && \

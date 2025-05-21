@@ -1,20 +1,24 @@
 import uuid
+from typing import Optional
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 
-class UserSchema(BaseModel):
+class UserCreateDTO(BaseModel):
     name: str
     password: str
     email: EmailStr
 
 
-class UserPublic(BaseModel):
+class UserUpdateDTO(BaseModel):
+    name: Optional[str] = None
+    password: Optional[str] = None
+    email: Optional[EmailStr] = None
+
+
+class UserResponseDTO(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     name: str
     email: EmailStr
-
-
-class UserPublicBasic(BaseModel):
-    id: str
-    name: str

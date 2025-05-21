@@ -1,11 +1,15 @@
 import uuid
 from decimal import Decimal
+from typing import TYPE_CHECKING, Optional
 
 from sqlalchemy import Column, Numeric, String
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, Relationship, SQLModel
 
 from src.models.enums import ProductStatus
 from src.utils.models.timestamp_mixin import TimestampMixin
+
+if TYPE_CHECKING:
+    from src.models.user_model import User
 
 
 class Product(SQLModel, TimestampMixin, table=True):
@@ -19,6 +23,7 @@ class Product(SQLModel, TimestampMixin, table=True):
     name: str = Field(
         default=None, unique=True, index=True, nullable=False, sa_type=String
     )
+    description: str = Field(default=None, nullable=True, sa_type=String)
     stock: int
     unit_price: Decimal = Field(
         sa_column=Column(Numeric(10, 2), nullable=False, default=0.00)
@@ -28,3 +33,4 @@ class Product(SQLModel, TimestampMixin, table=True):
     )
 
     user_id: uuid.UUID = Field(foreign_key="users.id")
+    owner: Optional["User"] = Relationship(back_populates="products")

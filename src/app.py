@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from src.routes.products import product_router
-from src.routes.users import user_router
+from src.controllers.product import product_router
+from src.controllers.users import user_router
 
 app = FastAPI()
 

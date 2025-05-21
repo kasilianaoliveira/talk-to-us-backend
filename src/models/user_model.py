@@ -1,11 +1,14 @@
 import uuid
-from typing import Optional
+from typing import TYPE_CHECKING, List, Optional
 
 from pydantic import EmailStr
 from sqlalchemy import String
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, Relationship, SQLModel
 
 from src.utils.models.timestamp_mixin import TimestampMixin
+
+if TYPE_CHECKING:
+    from src.models.product_model import Product
 
 
 class User(SQLModel, TimestampMixin, table=True):
@@ -27,4 +30,10 @@ class User(SQLModel, TimestampMixin, table=True):
         unique=True,
         nullable=False,
         sa_type=String,
+    )
+    products: List["Product"] = Relationship(
+        back_populates="owner",
+        sa_relationship_kwargs={
+            "cascade": "all, delete-orphan",
+        },
     )
