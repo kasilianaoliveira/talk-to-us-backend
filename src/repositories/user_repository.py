@@ -5,6 +5,7 @@ from sqlmodel import select
 
 from src.db.connection import SessionDep
 from src.models.user_model import User
+from src.schemas.responses_messages import MessageResponse
 
 
 class UserRepository:
@@ -17,13 +18,13 @@ class UserRepository:
 
     async def get_user_by_name(self, user_name: str) -> Optional[User]:
         get_user = await self.session.scalar(
-            select(User).where(User.name == user_name)
+            select(User).where(User.name == user_name),
         )
         return get_user
 
     async def get_user_by_email(self, email: str) -> Optional[User]:
         result = await self.session.execute(
-            select(User).where(User.email == email)
+            select(User).where(User.email == email),
         )
         return result.scalar_one_or_none()
 
@@ -45,11 +46,11 @@ class UserRepository:
 
         return user
 
-    async def delete(self, user: User) -> dict[str, str]:
+    async def delete(self, user: User) -> MessageResponse:
         await self.session.delete(user)
         await self.session.commit()
 
-        return {"message": "User has been deleted successfully."}
+        return MessageResponse(message="User has been deleted successfully.")
 
 
 async def get_user_repository(session: SessionDep):

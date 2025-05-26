@@ -10,14 +10,15 @@ from src.repositories.user_repository import (
     UserRepository,
     get_user_repository,
 )
-from src.schemas.user_schema import UserCreateDTO
+from src.schemas.responses_messages import MessageResponse
+from src.schemas.user_schema import UserCreateDTO, UserResponseDTO
 
 
 class UserService:
     def __init__(self, user_repository: UserRepository):
         self.user_repository = user_repository
 
-    async def get_user(self, user_id: UUID) -> User:
+    async def get_user(self, user_id: UUID) -> UserResponseDTO:
         existing_user = await self.user_repository.get_user_by_id(
             user_id,
         )
@@ -28,9 +29,13 @@ class UserService:
                 detail="User does not exist.",
             )
 
-        return existing_user
+        return UserResponseDTO(
+            id=existing_user.id,
+            name=existing_user.name,
+            email=existing_user.email,
+        )
 
-    async def create_user(self, user_data: UserCreateDTO) -> User:
+    async def create_user(self, user_data: UserCreateDTO) -> UserResponseDTO:
         existing_user = await self.user_repository.get_user_by_email(
             user_data.email,
         )
@@ -47,9 +52,14 @@ class UserService:
             password=hash_password(user_data.password),
         )
         result_user = await self.user_repository.create(user)
-        return result_user
 
-    async def delete_user(self, user_id) -> dict[str, str]:
+        return UserResponseDTO(
+            id=result_user.id,
+            name=result_user.name,
+            email=result_user.email,
+        )
+
+    async def delete_user(self, user_id) -> MessageResponse:
         existing_user = await self.user_repository.get_user_by_id(user_id)
 
         if not existing_user:
