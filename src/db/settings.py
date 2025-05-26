@@ -23,7 +23,7 @@ class Settings(BaseSettings):
         """Usado pelo Alembic (síncrono)"""
         return (
             f"postgresql+psycopg2://{self.DB_POSTGRES_USER}:"
-            f"{self.DB_POSTGRES_PASSWORD}@{self.DB_POSTGRES_HOST_LOCAL}"
+            f"{self.DB_POSTGRES_PASSWORD}@{self.DB_POSTGRES_HOST_LOCAL}:5440"
             f"/{self.DB_POSTGRES_NAME}"
         )
 
@@ -31,6 +31,6 @@ class Settings(BaseSettings):
     def DATABASE_URL(self) -> str:
         return (
             f"postgresql+asyncpg://{self.DB_POSTGRES_USER}:"
-            f"{self.DB_POSTGRES_PASSWORD}@{self.DB_POSTGRES_HOST_LOCAL}"
+            f"{self.DB_POSTGRES_PASSWORD}@{self.DB_POSTGRES_HOST_LOCAL}:5440"
             f"/{self.DB_POSTGRES_NAME}"
         )

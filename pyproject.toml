@@ -51,12 +51,13 @@ test = 'pytest -s -x --cov=src -vv'
 post_test = 'coverage html'
 migrate = 'alembic upgrade head'
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.3.5"
-pytest-cov = "^6.1.1"
-taskipy = "^1.14.1"
-ruff = "^0.11.5"
-httpx = "^0.28.1"
-pytest-asyncio = "^0.26.0"
-aiosqlite = "^0.21.0"
-
+[dependency-groups]
+dev = [
+    "pytest >=8.3.5,<9.0.0",
+    "pytest-cov >=6.1.1,<7.0.0",
+    "taskipy >=1.14.1,<2.0.0",
+    "ruff >=0.11.5,<1.0.0",
+    "httpx >=0.28.1,<1.0.0",
+    "pytest-asyncio >=0.26.0,<1.0.0",
+    "aiosqlite >=0.21.0,<1.0.0"
+]
